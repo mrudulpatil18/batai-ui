@@ -8,7 +8,7 @@ export interface ContractDTO {
     tenantDue: number;
   }
 
-  export type TransactionType = "PAYMENT" | "ADVANCE" | "SETTLEMENT" | "OTHER"; // Add more types as needed
+ export type TransactionType = "EXPENDITURE" | "INCOME" | "TRANSFER"; 
 
 export interface TransactionDTO {
   description: string;
@@ -18,6 +18,6 @@ export interface TransactionDTO {
   amount: number;
   sharingPercent: number;
   transactionType: TransactionType;
-  timeCreated: number; // Timestamp in milliseconds
-  timeModified: number; // Timestamp in milliseconds
+  timeCreated: number;
+  timeModified: number;
 }
