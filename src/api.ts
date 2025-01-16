@@ -12,7 +12,7 @@ export const login = async (username: string, password: string): Promise<any> =>
 
         // Check if the response is ok (status 200-299)
         if (!response.ok) {
-            const errorData = await response.json().catch(() => null); // Safely parse JSON
+            const errorData = await response.json().catch(() => null);
             const errorMessage = errorData?.message || 'Failed to login';
             throw new Error(errorMessage);
         }
