@@ -5,9 +5,16 @@ interface User {
     // Add other user properties as needed
 }
 
+interface AuthResponse {
+    user: User;
+    token: string;
+    // Add other auth response properties as needed
+}
+
 interface AuthContextType {
     user: User | null;
-    login: (userData: User) => void;
+    token: string | null;
+    login: (authData: AuthResponse) => void;
     logout: () => void;
 }
 
@@ -19,19 +26,26 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         return savedUser ? JSON.parse(savedUser) : null;
     });
 
-    const login = (userData: User) => {
-        console.log(userData);
-        setUser(userData);
-        localStorage.setItem('user', JSON.stringify(userData));
+    const [token, setToken] = useState<string | null>(() => {
+        return localStorage.getItem('token');
+    });
+
+    const login = (authData: AuthResponse) => {
+        setUser(authData.user);
+        setToken(authData.token);
+        localStorage.setItem('user', JSON.stringify(authData.user));
+        localStorage.setItem('token', authData.token);
     };
 
     const logout = () => {
         setUser(null);
+        setToken(null);
         localStorage.removeItem('user');
+        localStorage.removeItem('token');
     };
 
     return (
-        <AuthContext.Provider value={{ user, login, logout }}>
+        <AuthContext.Provider value={{ user, token, login, logout }}>
             {children}
         </AuthContext.Provider>
     );

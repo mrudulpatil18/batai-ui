@@ -1,14 +1,20 @@
 export interface ContractDTO {
-    contractId: number;
-    owner: string;
-    tenant: string;
-    ownerAccount: number;
-    ownerDue: number;
-    tenantAccount: number;
-    tenantDue: number;
-  }
+  contractId: number;
+  owner: string;
+  tenant: string;
+  ownerAccount: number;
+  ownerDue: number;
+  tenantAccount: number;
+  tenantDue: number;
+}
 
- export type TransactionType = "EXPENDITURE" | "INCOME" | "TRANSFER"; 
+export interface User {
+  password: string,
+  userId: number,
+  username: string
+};
+
+export type TransactionType = "EXPENDITURE" | "INCOME" | "TRANSFER";
 
 export interface TransactionDTO {
   description: string;

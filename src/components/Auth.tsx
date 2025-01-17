@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import * as apiService from '../api';
+import * as apiService from '../api/auth_api';
 import './Auth.css';
 
 type Errors = {
