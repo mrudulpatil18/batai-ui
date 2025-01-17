@@ -3,7 +3,7 @@ import { Container } from '../components/Container';
 import { ContractCard } from '../components/ContractCard';
 import { useAuth } from '../context/AuthContext';
 import { ContractDTO } from '../types';
-import { getContractById, getContracts } from '../api/data_api';
+import { getContracts } from '../api/data_api';
 
 export default function Profile() {
     const { user, logout, token } = useAuth();

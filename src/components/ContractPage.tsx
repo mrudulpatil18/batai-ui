@@ -3,9 +3,10 @@ import { useParams } from 'react-router-dom';
 import { ContractCard } from './ContractCard';
 import { Container } from './Container';
 import { useAuth } from '../context/AuthContext';
-import { getContractById, getTransactionsByContract, createTransaction } from '../api/data_api';
+import { getContractById, getTransactionsByContract } from '../api/data_api';
 import { ContractDTO, TransactionDTO } from '../types';
 import { PlusCircle } from 'lucide-react';
+import Transaction from './Transaction';
 
 export const ContractPage: React.FC = () => {
     const { id } = useParams<{ id: string }>();
@@ -101,57 +102,7 @@ export const ContractPage: React.FC = () => {
                 ) : (
                     <div className="space-y-2">
                         {transactions.map((transaction, index) => (
-                            <div
-                                key={String(transaction) || index}
-                                className="bg-white p-3 rounded-lg border border-gray-200 hover:shadow-sm transition-all"
-                            >
-                                <div className="flex items-center justify-between gap-4">
-                                    {/* Left section: Type and Description */}
-                                    <div className="flex items-center gap-3 min-w-[200px] max-w-[300px]">
-                                        <div className="h-8 w-8 rounded-full bg-[#10B981] bg-opacity-10 flex items-center justify-center flex-shrink-0">
-                                            <span className="text-[#10B981] text-sm font-medium">
-                                                {transaction.transactionType?.charAt(0)}
-                                            </span>
-                                        </div>
-                                        <div className="min-w-0">
-                                            <p className="text-sm font-medium text-gray-900 truncate">
-                                                {transaction.transactionType}
-                                            </p>
-                                            <p className="text-xs text-gray-500 truncate">
-                                                {transaction.description}
-                                            </p>
-                                        </div>
-                                    </div>
-
-                                    {/* Middle section: Amount and Paid By */}
-                                    <div className="flex items-center gap-6 flex-grow">
-                                        <div className="flex items-center gap-2">
-                                            <span className="text-sm font-medium text-gray-900">
-                                                ${transaction.amount?.toLocaleString()}
-                                            </span>
-                                        </div>
-                                        <div className="flex items-center gap-1">
-                                            <span className="text-sm text-gray-500">by</span>
-                                            <span className="text-sm font-medium text-gray-900">
-                                                {transaction.paidBy}
-                                            </span>
-                                        </div>
-                                        <div className="flex items-center gap-1">
-                                            <span className="text-sm text-gray-500">share:</span>
-                                            <span className="text-sm font-medium text-gray-900">
-                                                {transaction.sharingPercent}%
-                                            </span>
-                                        </div>
-                                    </div>
-
-                                    {/* Right section: Date */}
-                                    <div className="text-right flex-shrink-0">
-                                        <p className="text-xs text-gray-500">
-                                            {new Date(transaction.timeCreated || '').toLocaleDateString()}
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
+                            <Transaction transaction={transaction} key={transaction.description || index} contract={contract} />
                         ))}
                     </div>
                 )}

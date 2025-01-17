@@ -47,7 +47,7 @@ export const ContractCard = ({ contract }: ContractCardProps) => {
             <div className="mt-4 border-t pt-4">
                 <h4 className="text-green-700 font-medium">Your Account</h4>
                 <div className="mt-2 flex justify-between items-center">
-                    <span className="font-medium">Balance:</span>
+                    <span className="font-medium">Margin:</span>
                     <span className={balance < 0 ? "text-red-500" : "text-green-500"}>
                         ${balance.toLocaleString()}
                     </span>
