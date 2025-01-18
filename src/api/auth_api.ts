@@ -7,7 +7,7 @@ export const login = async (username: string, password: string): Promise<any> =>
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ username, password }),
+            body: JSON.stringify({ username, password}),
         });
 
         // Check if the response is ok (status 200-299)
@@ -29,14 +29,14 @@ export const login = async (username: string, password: string): Promise<any> =>
 };
 
 
-export const register = async (username: string, password: string): Promise<any> => {
+export const register = async (username: string, password: string, firstName: string, lastName: string, phoneNumber: number): Promise<any> => {
     try {
         const response = await fetch(`${API_URL}/auth/register`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ username, password }),
+            body: JSON.stringify({ username, password, firstName, lastName, phoneNumber }),
         });
 
         // Check if the response is ok (status 200-299)
