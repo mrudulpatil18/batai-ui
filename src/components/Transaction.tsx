@@ -75,7 +75,7 @@ const Transaction: React.FC<TransactionProps> = ({ transaction, contract }) => {
         </div>
         <div className="flex items-center text-sm text-gray-500">
           <Calendar size={14} className="mr-1" />
-          {new Date().toLocaleDateString()}
+          {transaction.timeCreated ? new Date(transaction.timeCreated).toLocaleDateString() : "--/--/----"}
         </div>
         <div className={`w-24 text-right font-medium ${balanceClass}`}>
           {balanceImpact > 0 ? "+" : ""}{balanceImpact!=0 && balanceImpact.toLocaleString()}

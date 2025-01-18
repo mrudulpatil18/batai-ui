@@ -7,6 +7,7 @@ import { getContractById, getTransactionsByContract } from '../api/data_api';
 import { ContractDTO, TransactionDTO } from '../types';
 import { PlusCircle } from 'lucide-react';
 import Transaction from './Transaction';
+import TransactionForm from './TransactionForm';
 
 export const ContractPage: React.FC = () => {
     const { id } = useParams<{ id: string }>();
@@ -111,27 +112,23 @@ export const ContractPage: React.FC = () => {
             {/* Add your TransactionForm component here */}
             {showNewTransactionForm && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-                    <div className="bg-white p-6 rounded-lg max-w-md w-full">
-                        <h3 className="text-xl font-semibold mb-4">New Transaction</h3>
-                        {/* Add your transaction form component here */}
-                        <div className="flex justify-end gap-2 mt-4">
-                            <button
-                                onClick={() => setShowNewTransactionForm(false)}
-                                className="px-4 py-2 text-gray-600 hover:text-gray-800"
-                            >
-                                Cancel
-                            </button>
-                            <button
-                                onClick={() => {
-                                    // Add form submission logic
-                                    setShowNewTransactionForm(false);
-                                }}
-                                className="px-4 py-2 bg-[#10B981] text-white rounded-md hover:bg-[#059669]"
-                            >
-                                Create
-                            </button>
-                        </div>
-                    </div>
+                    <TransactionForm
+                        contractId={contractId}
+                        token={token || ''}
+                        onClose={() => setShowNewTransactionForm(false)}
+                        onSuccess={() => {
+                            // Refresh transactions list
+                            if (token) {
+                                getTransactionsByContract(contractId, token)
+                                    .then(res => {
+                                        if (res.transactions) {
+                                            setTransactions(res.transactions);
+                                        }
+                                    })
+                                    .catch(console.error);
+                            }
+                        }}
+                    />
                 </div>
             )}
         </Container>

@@ -24,6 +24,6 @@ export interface TransactionDTO {
   amount: number;
   sharingPercent: number;
   transactionType: TransactionType;
-  timeCreated: number;
+  timeCreated: Date;
   timeModified: number;
 }
