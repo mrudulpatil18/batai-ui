@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { createTransaction } from '../api/data_api';
-import { TransactionDTO } from '../types';
 import { AlertCircle } from 'lucide-react';
 
 interface TransactionFormProps {

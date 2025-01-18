@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { ContractCard } from './ContractCard';
 import { Container } from './Container';
 import { useAuth } from '../context/AuthContext';
-import { getContractById, getContracts, getTransactionsByContract } from '../api/data_api';
+import { getContractById, getTransactionsByContract } from '../api/data_api';
 import { ContractDTO, TransactionDTO } from '../types';
 import { PlusCircle } from 'lucide-react';
 import Transaction from './Transaction';
