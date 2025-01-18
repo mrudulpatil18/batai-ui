@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { ContractCard } from './ContractCard';
 import { Container } from './Container';
 import { useAuth } from '../context/AuthContext';
-import { getContractById, getTransactionsByContract } from '../api/data_api';
+import { getContractById, getContracts, getTransactionsByContract } from '../api/data_api';
 import { ContractDTO, TransactionDTO } from '../types';
 import { PlusCircle } from 'lucide-react';
 import Transaction from './Transaction';
@@ -123,6 +123,14 @@ export const ContractPage: React.FC = () => {
                                     .then(res => {
                                         if (res.transactions) {
                                             setTransactions(res.transactions);
+                                        }
+                                    })
+                                    .catch(console.error);
+
+                                getContractById(contractId, token)
+                                    .then(res => {
+                                        if(res.contract){
+                                            setContract(res.contract);
                                         }
                                     })
                                     .catch(console.error);

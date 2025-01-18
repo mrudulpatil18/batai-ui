@@ -63,7 +63,7 @@ const TransactionForm: React.FC<TransactionFormProps> = ({
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md border border-gray-300 max-w-2xl mx-auto max-h-[90vh] overflow-y-auto">
+    <div className="bg-white rounded-lg shadow-md border border-gray-300 max-w-4xl mx-auto max-h-[90vh] overflow-y-auto">
       {/* Header */}
       <div className="p-4 border-b border-gray-300">
         <div className="text-lg font-semibold text-green-700">New Transaction</div>
