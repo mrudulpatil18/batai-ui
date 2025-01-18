@@ -1,4 +1,4 @@
-import { ContractDTO, TransactionDTO } from "../types";
+import { ContractDTO, TransactionDTO, User } from "../types";
 
 const API_URL = 'http://localhost:8080';
 
@@ -139,6 +139,32 @@ export const createTransaction = async (
     } catch (error: unknown) {
         if (error instanceof Error) {
             throw new Error(`Failed to create transaction: ${error.message}`);
+        }
+        throw new Error('An unknown error occurred');
+    }
+};
+
+
+export const getContractUsers = async (token: string, contractId: number): Promise<{ owner:User, tenant: User }> => {
+    try {
+        const response = await fetch(`${API_URL}/users/${contractId}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json().catch(() => null);
+            const errorMessage = errorData?.message || 'Failed to fetch contract users';
+            throw new Error(errorMessage);
+        }
+
+        return await response.json();
+    } catch (error: unknown) {
+        if (error instanceof Error) {
+            throw new Error(`Failed to fetch contract users: ${error.message}`);
         }
         throw new Error('An unknown error occurred');
     }

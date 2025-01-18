@@ -101,7 +101,7 @@ export default function Profile() {
             )}
             <div className="flex flex-col gap-4">
                 {contracts.map((contract) => (
-                    <ContractCard key={contract.contractId} contract={contract} />
+                    <ContractCard key={contract.contractId} contract={contract} setUsers={()=>{}}/>
                 ))}
             </div>
         </Container>

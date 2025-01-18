@@ -163,23 +163,24 @@ function Auth() {
                         {errors.password && <span className="field-error">{errors.password}</span>}
                     </div>
 
-                    <div className="form-group">
-                        <label htmlFor="confirmPassword">Confirm Password</label>
-                        <input
-                            id="confirmPassword"
-                            type="password"
-                            placeholder="Confirm your password"
-                            value={confirmPassword}
-                            onChange={(e) => setConfirmPassword(e.target.value)}
-                            className={errors.confirmPassword ? 'error' : ''}
-                        />
-                        {errors.confirmPassword && (
-                            <span className="field-error">{errors.confirmPassword}</span>
-                        )}
-                    </div>
+
 
                     {mode === 'register' && (
                         <>
+                            <div className="form-group">
+                                <label htmlFor="confirmPassword">Confirm Password</label>
+                                <input
+                                    id="confirmPassword"
+                                    type="password"
+                                    placeholder="Confirm your password"
+                                    value={confirmPassword}
+                                    onChange={(e) => setConfirmPassword(e.target.value)}
+                                    className={errors.confirmPassword ? 'error' : ''}
+                                />
+                                {errors.confirmPassword && (
+                                    <span className="field-error">{errors.confirmPassword}</span>
+                                )}
+                            </div>
                             <div className="form-group">
                                 <label htmlFor="firstName">First Name</label>
                                 <input

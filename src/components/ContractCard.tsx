@@ -1,14 +1,37 @@
 import { useNavigate } from "react-router-dom";
-import { ContractDTO } from "../types";
+import { useEffect, useState } from "react";
+import { ContractDTO, User } from "../types";
 import { useAuth } from "../context/AuthContext";
+import { getContractUsers } from "../api/data_api";
 
 interface ContractCardProps {
     contract: ContractDTO;
+    setUsers(owner:User, tenant: User): any
 }
 
-export const ContractCard = ({ contract }: ContractCardProps) => {
+export const ContractCard = ({ contract, setUsers }: ContractCardProps) => {
     const navigate = useNavigate();
-    const { user } = useAuth();
+    const { user, token } = useAuth();
+
+    const [owner, setOwner] = useState<User | null>(null);
+    const [tenant, setTenant] = useState<User | null>(null);
+
+    const fetchUsers = async () => {
+        try {
+            if (token) {
+                const { owner, tenant } = await getContractUsers(token, contract.contractId);
+                setOwner(owner);
+                setTenant(tenant);
+                setUsers(owner, tenant);
+            }
+        } catch (err) {
+            console.error("Error fetching contract users:", err);
+        }
+    };
+
+    useEffect(() => {
+        fetchUsers();
+    }, [token, contract]);
 
     const isOwner = user?.username === contract.owner;
 
@@ -20,7 +43,7 @@ export const ContractCard = ({ contract }: ContractCardProps) => {
     const owesYou = due < 0; // Negative due means the other party owes you
     const youOwe = due > 0; // Positive due means you owe the other party
 
-    const otherParty = isOwner ? contract.tenant : contract.owner;
+    const otherParty = isOwner ? tenant?.username : owner?.username;
 
     return (
         <div
@@ -35,11 +58,11 @@ export const ContractCard = ({ contract }: ContractCardProps) => {
                 <h3 className="text-gray-700 text-sm font-medium">Contract Details</h3>
                 <div className="mt-1 flex justify-between items-center">
                     <span className="font-medium text-gray-500">Owner:</span>
-                    <span className="text-gray-800">{contract.owner}</span>
+                    <span className="text-gray-800">{owner ? owner.firstName + " " + owner.lastName : "Loading..."}</span>
                 </div>
                 <div className="mt-1 flex justify-between items-center">
                     <span className="font-medium text-gray-500">Tenant:</span>
-                    <span className="text-gray-800">{contract.tenant}</span>
+                    <span className="text-gray-800">{tenant ? tenant.firstName + " " + tenant.lastName : "Loading..."}</span>
                 </div>
             </div>
 

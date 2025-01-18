@@ -12,6 +12,9 @@ export interface User {
   password: string,
   userId: number,
   username: string
+  firstName: string,
+  lastName: string,
+  phoneNumber: number
 };
 
 export type TransactionType = "EXPENDITURE" | "INCOME" | "TRANSFER";

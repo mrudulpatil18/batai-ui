@@ -1,11 +1,13 @@
 import React from 'react';
 import { useAuth } from "../context/AuthContext";
-import { ContractDTO, TransactionDTO } from "../types";
-import { Calendar, User, Percent } from 'lucide-react';
+import { ContractDTO, TransactionDTO, User } from "../types";
+import { Calendar, User as UserIcon, Percent } from 'lucide-react';
 
 interface TransactionProps {
   transaction: TransactionDTO;
   contract: ContractDTO;
+  owner: User | undefined;
+  tenant: User | undefined;
 }
 
 const calculateUtils = (transaction: TransactionDTO, contract: ContractDTO) =>{
@@ -24,7 +26,7 @@ const calculateUtils = (transaction: TransactionDTO, contract: ContractDTO) =>{
     return {balanceImpact, isOwner};
 }
 
-const Transaction: React.FC<TransactionProps> = ({ transaction, contract }) => {
+const Transaction: React.FC<TransactionProps> = ({ transaction, contract, owner, tenant }) => {
   
   const {isOwner, balanceImpact} = calculateUtils(transaction, contract);
   
@@ -66,12 +68,20 @@ const Transaction: React.FC<TransactionProps> = ({ transaction, contract }) => {
       {/* Right section with metadata and balance impact */}
       <div className="flex items-center space-x-4 flex-shrink-0">
         <div className="flex items-center text-sm text-gray-500">
-          <User size={14} className="mr-1" />
-          {transaction.paidBy}
+          <UserIcon size={14} className="mr-1" />
+          {transaction.paidBy == owner?.username ? (owner?.firstName + " " + owner?.lastName) : (tenant?.firstName + " " + tenant?.lastName)}
         </div>
         <div className="flex items-center text-sm text-gray-500">
-        {isOwner ? transaction.sharingPercent : 100 - transaction.sharingPercent}
-          <Percent size={14} className="mr-1" />
+        
+        {transaction.transactionType != "TRANSFER" ?
+            
+            <>{ isOwner ? transaction.sharingPercent : 100 - transaction.sharingPercent}
+            <Percent size={14} className="mr-1" />
+            </>
+            : "-----"
+        }
+        
+        
         </div>
         <div className="flex items-center text-sm text-gray-500">
           <Calendar size={14} className="mr-1" />

@@ -4,7 +4,7 @@ import { ContractCard } from './ContractCard';
 import { Container } from './Container';
 import { useAuth } from '../context/AuthContext';
 import { getContractById, getTransactionsByContract } from '../api/data_api';
-import { ContractDTO, TransactionDTO } from '../types';
+import { ContractDTO, TransactionDTO, User } from '../types';
 import { PlusCircle } from 'lucide-react';
 import Transaction from './Transaction';
 import TransactionForm from './TransactionForm';
@@ -19,6 +19,8 @@ export const ContractPage: React.FC = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [showNewTransactionForm, setShowNewTransactionForm] = useState(false);
+    const [owner, setOwner] = useState<User>();
+    const [tenant, setTenant] = useState<User>();
 
     useEffect(() => {
         const fetchContractData = async () => {
@@ -81,7 +83,10 @@ export const ContractPage: React.FC = () => {
     return (
         <Container>
             {/* Contract Card */}
-            <ContractCard contract={contract} />
+            <ContractCard contract={contract} setUsers={(owner, tenant) => {
+                setOwner(owner);
+                setTenant(tenant);
+            }}/>
 
             {/* Transactions Section */}
             <div className="mt-8">
@@ -103,7 +108,7 @@ export const ContractPage: React.FC = () => {
                 ) : (
                     <div className="space-y-2">
                         {transactions.map((transaction, index) => (
-                            <Transaction transaction={transaction} key={transaction.description || index} contract={contract} />
+                            <Transaction transaction={transaction} key={transaction.description || index} contract={contract} owner={owner} tenant={tenant} />
                         ))}
                     </div>
                 )}
